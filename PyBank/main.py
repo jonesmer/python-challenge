@@ -39,6 +39,7 @@ with open(csvpath, 'r') as csvfile:
                 initProfit = prevMonth
                 totalProfit = prevMonth
                 changeMonth = 0
+            # for the rest of the rows, total profit and month count will accumulate
             else:
                 totalProfit = totalProfit + int(row[1])
                 changeMonth = changeMonth + 1
@@ -61,10 +62,11 @@ with open(csvpath, 'r') as csvfile:
     else: avgString = "$" + str(avgChange)
     
     
+results = f"Financial Analysis\n\n----------------------------\n\nTotal Months: {monthCount}\n\nTotal: ${totalProfit}\n\nAverage Change: {avgString}\n\nGreatest Increase in Profits: {maxMonth} (${maxChange})\n\nGreatest Decrease in Profits: {minMonth} (-${minChange})"
 
 # print results
-print(f"\nFinancial Analysis\n\n----------------------------\n\nTotal Months: {monthCount}\n\nTotal: ${totalProfit}\n\nAverage Change: {avgString}\n\nGreatest Increase in Profits: {maxMonth} (${maxChange})\n\nGreatest Decrease in Profits: {minMonth} (-${minChange})\n")
+print("\n"+results +"\n")
 
 # save results into txt file
 with open(outputPath,'w') as output_file:
-    output_file.write(f"Financial Analysis\n\n----------------------------\n\nTotal Months: {monthCount}\n\nTotal: ${totalProfit}\n\nAverage Change: {avgString}\n\nGreatest Increase in Profits: {maxMonth} (${maxChange})\n\nGreatest Decrease in Profits: {minMonth} (-${minChange})")
+    output_file.write(results)

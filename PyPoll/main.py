@@ -50,10 +50,12 @@ for x in votesDict:
         winVotes = cVotes
         winName = cName
 
+results = f"Election Results\n\n----------------------------\n\nTotal Votes: {totalVotes}\n\n----------------------------\n" + voteStr + f"\n----------------------------\n\n Winner: {winName}\n\n----------------------------"
+
 # print results
-print(f"\nElection Results\n\n----------------------------\n\nTotal Votes: {totalVotes}\n\n----------------------------\n" + voteStr + f"\n----------------------------\n\n Winner: {winName}\n\n----------------------------\n")
+print("\n"+results+"\n")
 
 # save results into txt file
 with open(outputPath,'w') as output_file:
-    output_file.write(f"Election Results\n\n----------------------------\n\nTotal Votes: {totalVotes}\n\n----------------------------\n" + voteStr + f"\n----------------------------\n\n Winner: {winName}\n\n----------------------------")
+    output_file.write(results)
         
