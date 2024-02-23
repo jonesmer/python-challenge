@@ -21,36 +21,34 @@ minChange = 0
 with open(csvpath, 'r') as csvfile:
     csvreader= csv.reader(csvfile, delimiter=",")
 
+    # skip/store header
+    header = next(csvreader)
+    
     # loop through the rows of data
     for row in csvreader:
 
-        # we don't want the headers in the calcs, store them
-        if row[0] == "Date":
-            header1 = row[0]
-            header2 = row[1]
-        else:
-            # add to month tally and total profit
-            monthCount = monthCount + 1            
-            monthlyChange = int(row[1]) - prevMonth
-            prevMonth = int(row[1])
+        # add to month tally and total profit
+        monthCount = monthCount + 1            
+        monthlyChange = int(row[1]) - prevMonth
+        prevMonth = int(row[1])
 
-            # only want to record the initial profit once, totalProfit is same number
-            if monthCount == 1: 
-                initProfit = prevMonth
-                totalProfit = prevMonth
-                changeMonth = 0
-            # for the rest of the rows, total profit and month count will accumulate
-            else:
-                totalProfit = totalProfit + int(row[1])
-                changeMonth = changeMonth + 1
-            
-            # compare current change to max and min; overwrite if either case is true
-            if monthlyChange > maxChange:
-                maxMonth = row[0]
-                maxChange = monthlyChange
-            elif monthlyChange < minChange:
-                minMonth = row[0]
-                minChange = monthlyChange
+        # only want to record the initial profit once, totalProfit is same number
+        if monthCount == 1: 
+            initProfit = prevMonth
+            totalProfit = prevMonth
+            changeMonth = 0
+        # for the rest of the rows, total profit and month count will accumulate
+        else:
+            totalProfit = totalProfit + int(row[1])
+            changeMonth = changeMonth + 1
+        
+        # compare current change to max and min; overwrite if either case is true
+        if monthlyChange > maxChange:
+            maxMonth = row[0]
+            maxChange = monthlyChange
+        elif monthlyChange < minChange:
+            minMonth = row[0]
+            minChange = monthlyChange
 
     # calc avg, based on changeMonths (months - 1 because we didn't calc change in month 1)
     avgChange = round((prevMonth - initProfit) / changeMonth, 2)
@@ -61,7 +59,7 @@ with open(csvpath, 'r') as csvfile:
         avgString = "-$" + str(avgChange*(-1))
     else: avgString = "$" + str(avgChange)
     
-    
+# save the results string
 results = f"Financial Analysis\n\n----------------------------\n\nTotal Months: {monthCount}\n\nTotal: ${totalProfit}\n\nAverage Change: {avgString}\n\nGreatest Increase in Profits: {maxMonth} (${maxChange})\n\nGreatest Decrease in Profits: {minMonth} (-${minChange})"
 
 # print results
